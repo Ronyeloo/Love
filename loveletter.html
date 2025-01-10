@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SECRET</title>
+  <style>
+    :root {
+      --primary-bg: #fce7f3; /* Lighter background */
+      --letter-bg: #fff3f3; /* Soft letter background */
+      --letter-color: #8b0000;
+      --btn-bg: #ffb6c1;
+      --btn-color: #000;
+      --envelope-bg: #ffe0b3;
+      --highlight-color: #ff6384;
+      --shadow-color: rgba(0, 0, 0, 0.2);
+      --border-color: #8b0000;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--primary-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: url('https://cdn.pixabay.com/photo/2017/08/19/08/57/background-2657746_960_720.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      transition: background-color 0.3s ease;
+    }
+
+    header {
+      position: sticky;
+      text-align: center;
+      margin-bottom: 100px;
+      display: none; /* Initially hidden */
+      max-width: 95%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: var(--letter-color);
+      margin-top: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      padding: 15px 30px;
+      border: 3px solid var(--border-color);
+      border-radius: 10px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ffb6c1, #ff8b8b);
+      box-shadow: 0 10px 20px var(--shadow-color);
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px #ffb6c1, 0 0 15px #ff8b8b;
+      }
+      100% {
+        text-shadow: 0 0 30px #ffb6c1, 0 0 50px #ff8b8b;
+      }
+    }
+
+    .envelope {
+      position: relative;
+      width: 420px;
+      height: 270px;
+      background-color: var(--envelope-bg);
+      border-radius: 20px;
+      box-shadow: 2px 6px 5px var(--shadow-color); 
+      margin-top: 50px;
+      overflow: hidden;
+      transition: transform 0.5s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px var(--shadow-color);
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      height: 45%;
+      background-color: #81c2ee;
+      clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+      transform: translateX(-50%);
+      transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1); /* Smooth easing */
+    }
+
+    #letter-container {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 650px;
+      background-image: url('https://indieground.net/wp-content/uploads/2022/07/Freebie-VintagePaperTextures-Preview-05.jpg');
+      background-size: cover;
+      background-position: center;
+      color: black;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 12px 25px var(--shadow-color);
+      text-align: left;
+      font-size: 1.1rem;
+      font-weight: 550;
+      font-family: 'Courier New', Courier, monospace;
+      line-height: 1.8;
+      max-height: 84vh;
+      overflow-y: scroll;
+      white-space: pre-line;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      scrollbar-width: none; /* Firefox */
+  
+  
+    /* Diagonal stripe border pattern: Blue - White - Red - White - Blue */
+     
+  /* Diagonal stripe border pattern: Blue - White - Red - White - Blue (equal px) */
+  border-width: 10px;
+  border-style: solid;
+  border-image: repeating-linear-gradient(15deg, 
+    #33c5ff 0%, #33c5ff 10px, /* Blue */
+    white 10px, white 20px,   /* White */
+    #f8536b 20px, #f8536b 30px, /* Red */
+    white 30px, white 40px,   /* White */
+    #33c5ff 40px, #33c5ff 10px /* Blue */
+  ) 1;
+}
+    
+    
+    
+    
+    #letter-container::-webkit-scrollbar {
+      width: 0;
+    }
+    
+    #letter-container::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+    
+    #letter-container::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 10px;
+      background-color: var(--highlight-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      font-size: 1.8rem;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: darkred;
+    }
+
+    #flower-gif {
+      display: none;
+      margin-top: 50px;
+      width: 93%;
+      height: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      box-shadow: 0 12px 25px var(--shadow-color); 
+      transform: translate(-50%, -50%);
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      #letter-container {
+        font-size: 1rem;
+      }
+
+      .envelope {
+        width: 380px;
+        height: 220px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+        margin-top: -50px;
+      }
+
+      #letter-container {
+        width: 75%;
+        font-size: 1rem;
+        align-self: center;
+      }
+
+      .envelope {
+        width: 90%;
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <h1>HAPPY MONTHSARY, LOVELOVE</h1>
+  </header>
+  <img id="flower-gif" src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTIxYWZ1cWRvb3Nmb2toODN6aGdpMWZrMXpuYjZlOXl3dzAza3FwMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/R41LN6i13SQjrZDzqy/giphy.gif" alt="Flower GIF">
+  <div class="envelope" id="envelope">
+    <div class="flap" id="flap"></div>
+  </div>
+  <p id="instruction-text" style="font-size: 1.5rem; font-weight:700; color: #2a66aa; margin-top: 20px;">CLICK THE ENVELOPE</p>
+  <audio id="bg-music" src="Last Night on Earth.mp3" preload="auto"></audio>
+  <audio id="click-sound" src="Button Click - Sound Effect.mp3" preload="auto"></audio>
+
+  <div id="letter-container">
+    <button class="close-btn" id="close-btn">&times;</button>
+    <p id="letter-content"></p>
+  </div>
+
+  <script>
+    const letterContent = ` 
+    Dear You,
+
+    Just a note to say how much you mean to me.
+    With every passing moment, my affection for you grows stronger.
+    You are my sunshine, my reason to smile, my heartbeat.
+        Just a note to say how much you mean to me.
+    With every passing moment, my affection for you grows stronger.
+    You are my sunshine, my reason to smile, my heartbeat.
+        Just a note to say how much you mean to me.
+    With every passing moment, my affection for you grows stronger.
+    You are my sunshine, my reason to smile, my heartbeat.
+        Just a note to say how much you mean to me.
+    With every passing moment, my affection for you grows stronger.
+    You are my sunshine, my reason to smile, my heartbeat.
+        Just a note to say how much you mean to me.
+    With every passing moment, my affection for you grows stronger.
+    You are my sunshine, my reason to smile, my heartbeat.
+        Just a note to say how much you mean to me.
+    With every passing moment, my affection for you grows stronger.
+    You are my sunshine, my reason to smile, my heartbeat.
+
+    Forever yours,
+    Me ❤️
+  `;
+
+    const letterContainer = document.getElementById("letter-container");
+    const envelope = document.getElementById("envelope");
+    const flap = document.getElementById("flap");
+    const bgMusic = document.getElementById("bg-music");
+    const closeButton = document.getElementById("close-btn");
+    const letterText = document.getElementById("letter-content");
+    const flowerGif = document.getElementById("flower-gif");
+    const header = document.getElementById("header");
+    const instructionText = document.getElementById("instruction-text");
+    const clickSound = document.getElementById("click-sound");
+
+    const startTimestamp = 16;
+
+    bgMusic.volume = 0.1;
+    clickSound.volume = 1;
+
+    let canPlayClickSound = true;
+    let hasEnvelopeBeenClicked = false;
+
+    let startTime = 0.2;
+    let endTime = 2;
+
+    function playClickSound() {
+      if (canPlayClickSound) {
+        clickSound.currentTime = startTime;
+        clickSound.play();
+        canPlayClickSound = false;
+        setTimeout(() => {
+          clickSound.pause();
+          clickSound.currentTime = startTime;
+          canPlayClickSound = false;
+        }, (endTime - startTime) * 1000);
+      }
+    }
+
+    envelope.addEventListener("click", () => {
+      if (hasEnvelopeBeenClicked) return;
+
+      playClickSound();
+
+      letterContainer.style.display = 'block';
+      letterContainer.style.opacity = 1;
+
+      setTimeout(() => {
+        bgMusic.currentTime = startTimestamp;
+        bgMusic.play();
+      }, 1500);
+
+      envelope.style.transform = 'scale(0)';
+      flap.style.transform = 'translateX(-50%) rotateX(180deg)';
+      instructionText.style.display = 'none';
+
+      const lines = letterContent.trim().split("\n");
+      let index = 0;
+
+      const interval = setInterval(() => {
+        if (index < lines.length) {
+          letterText.textContent += lines[index] + "\n";
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 300);
+
+      hasEnvelopeBeenClicked = true;
+    });
+
+    closeButton.addEventListener("click", () => {
+      letterContainer.style.display = 'none';
+      bgMusic.pause();
+      bgMusic.currentTime = startTimestamp;
+
+      flowerGif.style.display = 'block';
+      header.style.display = 'block';
+      header.style.opacity = 0;
+      setTimeout(() => {
+        header.style.transition = 'opacity 1s ease';
+        header.style.opacity = 1;
+      }, 200);
+    });
+  </script>
+</body>
+</html>
